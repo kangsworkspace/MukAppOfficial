@@ -105,8 +105,8 @@ func goWebPage(url: String, fromVC: UIViewController) {
 }
 ```  
 그림은 위 코드로 화면을 이동한 모습입니다.
-이전의 코드와 달리 완전히 사파리 앱이 켜져서 해당 URL로 이동하는 방식으로 작동합니다.
-<img src="https://github.com/kangsworkspace/MukAppOfficial/assets/141600830/4a5a4895-fe01-4df2-b04f-3e48eff97a4c"  width="300" height="650"/> 
+이전의 코드와 달리 완전히 사파리 앱이 켜져서 해당 URL로 이동하는 방식으로 작동합니다.  
+<img src="https://github.com/kangsworkspace/MukAppOfficial/assets/141600830/4a5a4895-fe01-4df2-b04f-3e48eff97a4c"  width="300" height="650"/>  
 <img src="https://github.com/kangsworkspace/MukAppOfficial/assets/141600830/834aa7b2-d496-4b0d-9ca2-9932cfe449c1"  width="300" height="650"/>   
 **저는 제 앱에서 사용자가 식당의 정보를 간단하게 둘러보고 아래로 쓱 내려서 창을 끌 수 있으면 좋겠다고 생각했습니다.**  
 하지만 이 방식으로는 네비게이션 바의 작은 버튼을 눌러서 돌아가거나 홈 화면으로 돌아가면서 앱을 다시 켜줘야해서  
