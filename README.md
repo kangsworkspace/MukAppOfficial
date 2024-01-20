@@ -44,11 +44,13 @@
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/bc79d597-1502-45af-b6e9-256167f04814"  width="300" height="650"/>    
 <br/>
 <br/>
+<br/>
 그 외에도  
 사진을 눌러서 기본 이미지를 앨범 이미지로 바꾸기와 중간에 추가한 태그 꾹 눌러서 삭제하기,  
+
 링크를 누르면 해당 페이지로 연결해주기 등의 기능이 있습니다.  
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/c0403fc4-468c-49fc-b14f-f4d0790b1882"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/c1c55af3-1743-4dd3-b832-8dd247a82f1c"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/c1c55af3-1743-4dd3-b832-8dd247a82f1c"  width="300" height="650"/>  
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/6aa64849-c6a6-49b7-9a52-5a1e838d3fa4"  width="300" height="650"/>  
 <br/>
 <br/>
