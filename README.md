@@ -56,12 +56,79 @@
 <br/>
 <br/>
 
-# 핵심 기능 및 구현 방법들   
-## 룰렛 돌리기   
-## 코어데이터  
-## 파일매니저  
-## 핵심 로직1(이전 태그에 해당하는 식당의 태그만 보여주기)  
-## (+, -)버튼에 따른 테이블 뷰 처리  
+# 핵심 기능 및 구현 방법들     
+## 코어데이터 - Relationships(데이터를 어떻게 저장할 것인가)  
+프로젝트에서 맛집을 저장할 때 아래의 그림처럼 태그를 중분류 - 소분류로 나누어 저장합니다.  
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/daaa2fa5-8607-4643-b147-2f46846a66f0"  width="300" height="650"/>  
+그래서 데이터 구조는 아래의 그림처럼 하나의 식당에 여러개의 태그가 들어가는 형식으로 처리되어야 했습니다.  
+<img src="https://github.com/kangsworkspace/DataStorage/files/13997469/dataS.pdf"  width="300" height="650"/>  
+
+태그가 몇개가 추가될지 알 수 없기 때문에 코어 데이터의 `entity`에 들어가는 태그에 해당하는 `Attribute`의 개수를 유동적으로 처리할 필요가 있었습니다.  
+그래서 `entity`를 식당에 관련된 데이터를 저장하는 `RestaurantData entity`와 태그 정보를 관리하는 `CategoryData entity`로 분리하였습니다.  
+그리고 `RestaurantData entity`와 `CategoryData entity`에 `Relationships`의 타입을 To Many로 설정하여 `RestaurantData entity`가 다수의 `CategoryData entity`를 가지도록 하였습니다.
+
+아래는 코어 데이터로 맛집을 저장하는데 사용한 코드입니다.
+```swfit
+    func saveResToCoreData(address: String, group: String, phone: String, placeName: String, roadAddress: String, placeURL: String, date: Date, imagePath: String, categoryNameArray: [String], categoryTextArray: [String], competion: @escaping () -> Void) {
+        // RestaurantData의 entity 유효한지 확인
+        guard let entityRestaurant = NSEntityDescription.entity(forEntityName: entityName_Res, in: context) else {
+            competion()
+            return
+        }
+        
+        // CategoryData의 entity 유효한지 확인
+        guard let entityCategory = NSEntityDescription.entity(forEntityName: entityName_Cat, in: context) else {
+            competion()
+            return
+        }
+        
+        // 할당할 데이터를 가진 객체 생성
+        guard let newRes = NSManagedObject(entity: entityRestaurant, insertInto: context) as? RestaurantData else {
+            competion()
+            return
+        }
+        
+        // 객체에 데이터 할당
+        newRes.address = address
+        newRes.group = group
+        newRes.phone = phone
+        newRes.placeName = placeName
+        newRes.roadAddress = roadAddress
+        newRes.placeURL = placeURL
+        newRes.date = date
+        newRes.imagePath = imagePath
+        
+        // 카테고리 배열 할당
+        for index in 0...categoryNameArray.count - 1 {
+            
+            // 할당할 데이터를 가진 객체 생성
+            guard let newCat = NSManagedObject(entity: entityCategory, insertInto: context) as? CategoryData else {
+                competion()
+                return
+            }
+            
+            newCat.categoryName = categoryNameArray[index]
+            newCat.categoryText = categoryTextArray[index]
+            newCat.order = Int32(index)
+            
+            // newMenu에 newCategory 더하기
+            newRes.addToCategory(newCat)
+        }
+        
+        do {
+            try context.save()
+            competion()
+        } catch {
+            print(error)
+            competion()
+        }
+        competion()
+    }
+```
+
+## 코어 데이터 & 파일매니저
+## 로직1 - 이전 태그에 해당하는 식당의 태그만 보여주기
+## 로직2 - (+, -)버튼에 따른 테이블 뷰 처리  
 
 <br/>
 <br/>
@@ -69,14 +136,19 @@
 
 # Troubleshooting  
 ## 유동적인 테이블 뷰 갯수 처리  
-## 디자인 패턴  
-## 코어데이터 - Relationships
-## 동작이 가능한지를 시각적으로 알려주는 버튼의 색상과 실제 동작 가능의 여부 연결
+## 디자인 패턴
+## 동작이 가능한지를 시각적으로 알려주는 버튼의 색상과 실제 동작 가능의 여부 연결  
+
 <br/>
 <br/>
 <br/>
 
-# 앱을 만들며 고민한 부분들
+# 사용성에 대해 고민한 지점들  
+### 태그를 중분류 - 소분류로 나눌 것인가?
+// 지역 -> 
+입력한 맛집이 늘어날수록 -> 편리
+적을때는 -> 더 불편
+
 ### URL 이동
 첫번째 그림은 제 <뭐 먹지? 태그로 관리하는 맛집 & 룰렛 > 앱에서 맛집을 저장하거나 수정하는 페이지 입니다.  
 저기서 URL을 누르면 두번째 그림처럼 URL에 해당하는 웹뷰를 띄우게 됩니다.  
@@ -111,6 +183,7 @@ func goWebPage(url: String, fromVC: UIViewController) {
 이전의 코드와 달리 완전히 사파리 앱이 켜져서 해당 URL로 이동하는 방식으로 작동합니다.  
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/1d7ed3e7-2e71-4326-9690-692ef37cfcb6"  width="300" height="650"/>  
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/38c2271e-7441-4417-bc08-157f63c8ae10"  width="300" height="650"/>   
+
 **저는 제 앱에서 사용자가 식당의 정보를 간단하게 둘러보고 아래로 쓱 내려서 창을 끌 수 있으면 좋겠다고 생각했습니다.**  
 하지만 이 방식으로는 네비게이션 바의 작은 버튼을 눌러서 돌아가거나 홈 화면으로 돌아가면서 앱을 다시 켜줘야해서  
 사용자의 입장에서 번거로울거 같아 `SFSafariViewController` 사용하였습니다.  
@@ -122,6 +195,16 @@ func goWebPage(url: String, fromVC: UIViewController) {
 
 ### 저장한 맛집이 아닌 주변의 음식점들을 랜덤으로 뽑아주는 기능  
 - 카카오 API의 거리를 기준으로 데이터를 받는 기능을 응용하여 구현 가능할 것 같습니다.  
+
+### 디자인 패턴 보완
+- **문제점 1: 바인딩 미적용**      
+  제작 초기에는 MVVM패턴을 적용하려고 하였으나 바인딩을 하지 않으면서 MVC와 MVVM이 섞인 어중간한 디자인이 되었습니다.
+  
+- **문제점 2: `View Model`을 분리하지 않음**  
+  처음에는 공통적으로 사용할만한 코드가 많아서 일부러 View Model을 분리하지 않고 하나의 `View Model`을 사용하였습니다.
+  하지만 프로젝트가 커지면서 점점 원하는 코드의 시인성이 떨어져서 코드를 분리하는것이 더 좋았을 것이라고 생각이 되었습니다.  
+  
+- 현재 프로젝트에는 기초적인 M-V-VM의 역할에 대한 이해를 바탕으로 의존성 주입은 적용이 되었습니다. 그래서 패턴에 대한 이해를 더 정확하게 하고 바인딩을 시도하면 MVVM 디자인 패턴을 잘 적용해볼 수 있을 것 같습니다.  
 
 # 사용한 외부 라이브러리  
 [드롭다운 라이브러리](https://github.com/AssistoLab/DropDown)
