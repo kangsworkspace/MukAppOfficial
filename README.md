@@ -39,8 +39,9 @@
 <br/>
 또한 맛집을 추가할 때 이미 추가했던 태그는 다음에 미리 목록에 표시하고  
 룰렛을 돌릴 태그를 설정할 때 이전 태그에 해당하는 식당의 태그만 다음 목록에 보여주는 로직이 구현되어 있습니다.  
+
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/daaa2fa5-8607-4643-b147-2f46846a66f0"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/bc79d597-1502-45af-b6e9-256167f04814"  width="300" height="650"/>  
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/bc79d597-1502-45af-b6e9-256167f04814"  width="300" height="650"/>    
 <br/>
 <br/>
 그 외에도  
