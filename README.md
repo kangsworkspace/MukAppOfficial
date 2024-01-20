@@ -8,8 +8,8 @@
 <br/>
 
 # 앱 소개  
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/fc63f96c-4aa4-4286-8ca7-a0a2723337cd"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/e3feddda-0fcc-46fc-8b07-d4d8c8398abc"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/f664b9c4-019b-48f9-a0f2-48b9d6e1abb9"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/1d3b4f63-6fe3-4d33-9112-17815601399a"  width="300" height="650"/>
 
 
 **이번에 출시한 앱의 이름은 <뭐 먹지? 태그로 관리하는 맛집 & 룰렛> 입니다.**   
@@ -25,15 +25,15 @@
 <br/>
 <뭐 먹지? 태그로 관리하는 맛집 & 룰렛>은 아래의 그림처럼  
 맛집을 추가하기 위한 검색이 가능하고 추가할 맛집을 태그와 함께 저장/수정이 가능합니다.  
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/8d39f204-2186-47aa-967f-15a103115fde"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/2d8fb13d-ff96-4c3f-b22c-cc292df81a27"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/9550d26c-6049-4416-a5c0-99397c5cf207"  width="300" height="650"/>  
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/10e99a6d-3b7b-450b-9d36-2edf5a1c57c1"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/dbd3bf09-6011-4013-9519-cad105fa9fdc"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/707a2205-b526-41dd-b6cc-175c8faa862a"  width="300" height="650"/>  
 <br/>
 <br/>
 <br/>
 또한 태그를 이용하여 랜덤으로 저장한 맛집을 뽑아줍니다.  
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/f68ef71c-1f99-4796-b00d-328281b687ae"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/59aeb1b2-30da-4d38-94a7-62b82c7d58ab"  width="300" height="650"/>  
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/fd75c6d1-d88e-47d4-86f7-421077b50768"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/b62af681-6c64-45e9-a4f7-918c086e7a2c"  width="300" height="650"/>  
 <br/>
 <br/>
 <br/>
@@ -46,9 +46,9 @@
 그 외에도  
 사진을 눌러서 기본 이미지를 앨범 이미지로 바꾸기와 중간에 추가한 태그 꾹 눌러서 삭제하기,  
 링크를 누르면 해당 페이지로 연결해주기 등의 기능이 있습니다.  
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/fc18a35c-3f04-49bb-b834-57fa2f2d6509"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/388c3fc4-707b-42a5-84c2-38510c60613b"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/952bd69d-e7a0-4988-969d-b95ae9752caa"  width="300" height="650"/>  
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/c0403fc4-468c-49fc-b14f-f4d0790b1882"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/c1c55af3-1743-4dd3-b832-8dd247a82f1c"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/6aa64849-c6a6-49b7-9a52-5a1e838d3fa4"  width="300" height="650"/>  
 <br/>
 <br/>
 <br/>
@@ -77,8 +77,8 @@
 ### URL 이동
 첫번째 그림은 제 <뭐 먹지? 태그로 관리하는 맛집 & 룰렛 > 앱에서 맛집을 저장하거나 수정하는 페이지 입니다.  
 저기서 URL을 누르면 두번째 그림처럼 URL에 해당하는 웹뷰를 띄우게 됩니다.  
-<img src="https://github.com/kangsworkspace/MukAppOfficial/assets/141600830/3dd3485c-31cf-4f31-b6c5-c23e83add64e"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/MukAppOfficial/assets/141600830/5f8c4c34-3a16-40a0-93fe-3e85b0cf9866"  width="300" height="650"/>   
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/38eb23ff-e074-44b9-9521-08fec0fed093"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/9d682da0-197e-4e83-a672-949988672669"  width="300" height="650"/>   
 
 해당 기능은 아래의 코드와 같이 `SFSafariViewController`를 사용하였습니다.  
 먼저 `SafariServices`를 임포트 하고 해당 url을 파라미터로 넣은 `SFSafariViewController` 타입의 `safariViewController`를 선언했습니다.  
@@ -106,8 +106,8 @@ func goWebPage(url: String, fromVC: UIViewController) {
 ```  
 그림은 위 코드로 화면을 이동한 모습입니다.
 이전의 코드와 달리 완전히 사파리 앱이 켜져서 해당 URL로 이동하는 방식으로 작동합니다.  
-<img src="https://github.com/kangsworkspace/MukAppOfficial/assets/141600830/4a5a4895-fe01-4df2-b04f-3e48eff97a4c"  width="300" height="650"/>  
-<img src="https://github.com/kangsworkspace/MukAppOfficial/assets/141600830/834aa7b2-d496-4b0d-9ca2-9932cfe449c1"  width="300" height="650"/>   
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/1d7ed3e7-2e71-4326-9690-692ef37cfcb6"  width="300" height="650"/>  
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/38c2271e-7441-4417-bc08-157f63c8ae10"  width="300" height="650"/>   
 **저는 제 앱에서 사용자가 식당의 정보를 간단하게 둘러보고 아래로 쓱 내려서 창을 끌 수 있으면 좋겠다고 생각했습니다.**  
 하지만 이 방식으로는 네비게이션 바의 작은 버튼을 눌러서 돌아가거나 홈 화면으로 돌아가면서 앱을 다시 켜줘야해서  
 사용자의 입장에서 번거로울거 같아 `SFSafariViewController` 사용하였습니다.  
