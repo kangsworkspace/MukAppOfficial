@@ -67,7 +67,10 @@
 그래서 `entity`를 식당에 관련된 데이터를 저장하는 `RestaurantData entity`와 태그 정보를 관리하는 `CategoryData entity`로 분리하였습니다.  
 그리고 `RestaurantData entity`와 `CategoryData entity`에 `Relationships`의 타입을 To Many로 설정하여 `RestaurantData entity`가 다수의 `CategoryData entity`를 가지도록 하였습니다.
 
-아래는 코어 데이터로 맛집을 저장하는데 사용한 코드입니다.
+아래는 코어 데이터로 맛집을 저장하는데 사용한 코드입니다.  
+`RestaurantData entity`를 코어 데이터로 저장하는 코드는 일반적인 방법과 같습니다.  
+이후 배열로 받아온 태그 데이터를 반복문을 통해 갯수만큼 새로운 객체를 생성해서 `entity`를 `To Many`로 설정해 제공되는 `.addTo` 함수를 통해  
+`RestaurantData`에 `CategoryData`의 관계를 설정하였습니다.  
 ```swfit
     func saveResToCoreData(address: String, group: String, phone: String, placeName: String, roadAddress: String, placeURL: String, date: Date, imagePath: String, categoryNameArray: [String], categoryTextArray: [String], competion: @escaping () -> Void) {
         // RestaurantData의 entity 유효한지 확인
