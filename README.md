@@ -31,16 +31,16 @@
 <br/>
 <br/>
 <br/>
-또한 태그를 이용하여 랜덤으로 저장한 맛집을 뽑아줍니다.  
+태그를 이용하여 랜덤으로 저장한 맛집을 뽑아줍니다.  
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/fd75c6d1-d88e-47d4-86f7-421077b50768"  width="300" height="650"/>
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/b62af681-6c64-45e9-a4f7-918c086e7a2c"  width="300" height="650"/>  
 <br/>
 <br/>
 <br/>
-또한 맛집을 추가할 때 이미 추가했던 태그는 다음에 미리 목록에 표시하고  
+맛집을 추가할 때 이미 추가했던 태그는 다음에 미리 목록에 표시하고  
 룰렛을 돌릴 태그를 설정할 때 이전 태그에 해당하는 식당의 태그만 다음 목록에 보여주는 로직이 구현되어 있습니다.  
 
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/daaa2fa5-8607-4643-b147-2f46846a66f0"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/8d60557a-647e-4cdf-9149-a37d26e51a6d"  width="300" height="650"/>
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/bc79d597-1502-45af-b6e9-256167f04814"  width="300" height="650"/>    
 <br/>
 <br/>
@@ -59,7 +59,7 @@
 # 핵심 기능 및 구현 방법들     
 ## 코어데이터 - Relationships(데이터를 어떻게 저장할 것인가)  
 프로젝트에서 맛집을 저장할 때 아래의 그림처럼 태그를 중분류 - 소분류로 나누어 저장합니다.  
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/daaa2fa5-8607-4643-b147-2f46846a66f0"  width="300" height="650"/>  
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/8d60557a-647e-4cdf-9149-a37d26e51a6d"  width="300" height="650"/>  
 그래서 데이터 구조는 아래의 그림처럼 하나의 식당에 여러개의 태그가 들어가는 형식으로 처리되어야 했습니다.  
 <img src="https://github.com/kangsworkspace/DataStorage/files/13997469/dataS.pdf"  width="300" height="650"/>  
 
