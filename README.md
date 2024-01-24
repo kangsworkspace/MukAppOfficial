@@ -156,8 +156,18 @@
 <br/>
 
 - readFile(urlPath: String) -> UIImage
-- deleteFile(urlPath: String)
 
+  경로를 파라미터로 받아서 해당 경로에 해당하는 이미지를 리턴합니다.  
+  경로를 통해 받아온 데이터는 Data 타입이기 때문에 UIImage 타입으로 타입 캐스팅을 합니다.  
+  값이 없을 때 기본 이미지로 UIImage(named: "restaurant")을 사용하였습니다.  
+  <br/>
+  
+- deleteFile(urlPath: String)
+  경로를 파라미터로 받아서 해당 경로에 해당하는 이미지를 삭제합니다.
+<br/>
+
+이미지를 업데이트 하는 코드는 createFile(urlPath: String, image: UIImage)를 실행했을 때  
+같은 경로에 있던 파일이 변경되어 따로 코드를 작성하지 않았습니다.  
 ```swift
     // 싱글톤
     static let shared = ImageManager()
@@ -219,7 +229,7 @@
         // urls 메소드 => 요청된 도메인에서 지정된 공통 디렉토리에 대한 URL배열을 리턴해주는 메소드
         // for: 폴더를 정해주는 요소. Download 혹은 Document 등등
         // in: 제한을 걸어주는 요소. 그 이상은 못가게 하는
-        guard let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return UIImage(systemName: "person")! }
+        guard let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return UIImage(named: "restaurant")! }
         
         // 생성할 디렉토리 경로(url에 경로 추가)
         let directoryPath = url.appendingPathComponent("RestuarantImages")
@@ -261,8 +271,7 @@
 
 
 
-
-
+## 앨범의 이미지를 저장한 경우에만 경로 생성 및 데이터 저장(저장 공간 아끼기)  
 ## 로직1 - 이전 태그에 해당하는 식당의 태그만 보여주기
 ## 로직2 - (+, -)버튼에 따른 테이블 뷰 처리  
 
@@ -271,8 +280,10 @@
 <br/>  
 
 # Troubleshooting  
+
 ## 유동적인 테이블 뷰 갯수 처리  
-## 디자인 패턴
+## 디자인 패턴  
+
 ## 동작이 가능한지를 시각적으로 알려주는 버튼의 색상과 실제 동작 가능의 여부 연결  
 
 <br/>
