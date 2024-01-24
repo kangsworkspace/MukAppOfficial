@@ -162,7 +162,7 @@
   값이 없을 때 기본 이미지로 UIImage(named: "restaurant")을 사용하였습니다.  
   <br/>
   
-- deleteFile(urlPath: String)
+- deleteFile(urlPath: String)  
   경로를 파라미터로 받아서 해당 경로에 해당하는 이미지를 삭제합니다.
 <br/>
 
