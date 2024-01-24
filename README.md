@@ -67,7 +67,7 @@
 그래서 `entity`를 식당에 관련된 데이터를 저장하는 `RestaurantData entity`와 태그 정보를 관리하는 `CategoryData entity`로 분리하였습니다.  
 그리고 `RestaurantData entity`와 `CategoryData entity`에 `Relationships`의 타입을 To Many로 설정하여 `RestaurantData entity`가 다수의 `CategoryData entity`를 가지도록 하였습니다.
 
-아래는 코어 데이터로 맛집을 저장하는데 사용한 코드입니다.  
+**아래는 코어 데이터로 맛집을 저장하는데 사용한 코드입니다.**  
 `RestaurantData entity`를 코어 데이터로 저장하는 코드는 일반적인 방법과 같습니다.  
 이후 배열로 받아온 태그 데이터를 반복문을 통해 갯수만큼 새로운 객체를 생성해서 `entity`를 `To Many`로 설정해 제공되는 `.addTo` 함수를 통해  
 `RestaurantData`에 `CategoryData`의 관계를 설정하였습니다.  
@@ -129,7 +129,136 @@
     }
 ```
 
-## 코어 데이터 & 파일매니저  
+## 코어 데이터 & 파일매니저 (이미지 저장 방식) 
+앞서 언급하였듯이 상단의 이미지를 클릭하면 앨범의 사진을 가져올 수 있습니다.  
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/8d60557a-647e-4cdf-9149-a37d26e51a6d"  width="300" height="650"/>
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/c0403fc4-468c-49fc-b14f-f4d0790b1882"  width="300" height="650"/>  
+
+이 기능을 구현하기 위해서 코어 데이터와 파일 매니저를 사용하였습니다.  
+코어 데이터에 경로를 저장하고 파일 매니저를 통해 경로에 해당하는 파일을 가져오는 형식으로 구현하였습니다.  
+경로와 관련된 데이터로 Date()를 통해 생성된 날짜~시간의 값을 설정하였습니다.  
+초 단위로 데이터 경로를 설정해두면 겹치는 일을 피할 수 있을 것이라고 생각했는데  
+더 찾아보니 경로와 관련된 특정한 값을 따로 지정해두는것이 더 좋다고 하여 다음 프로젝트에 참고할 예정입니다.  
+
+**다음은 파일 매니저를 사용한 코드입니다.**  
+- makeDirectory()
+  
+  앱이 실행될 때 실행하기 위해 AppDelegate의 didFinishLaunchingWithOptions시점에서 동작하도록 하였습니다.  
+  처음 실행될 때 파일을 만들고 다음 실행에 생성된 파일이 이미 존재하면 파일이 존재한다는 로그를 남기고 리턴합니다.  
+<br/>
+
+- createFile(urlPath: String, image: UIImage)
+
+  이미지를 makeDirectory()에서 생성된 파일에 저장합니다.  
+  파라미터로 저장할 경로와 이미지를 받습니다.  
+  경로는 이미지를 저장하는 시점의 Date()로 생성되었습니다.
+  makeDirectory()에서 생성된 디렉토리에 파라미터로 전달받은 경로로 이미지 파일을 저장합니다.  
+<br/>
+
+- readFile(urlPath: String) -> UIImage
+- deleteFile(urlPath: String)
+
+```swift
+    // 싱글톤
+    static let shared = ImageManager()
+    
+    private let fileManager = FileManager.default
+    
+    // 파일 매니저 생성(앱 초기화 때 한번만 실행)
+    func makeDirectory() {
+        // urls 메소드 => 요청된 도메인에서 지정된 공통 디렉토리에 대한 URL배열을 리턴해주는 메소드
+        // for: 폴더를 정해주는 요소. Download 혹은 Document 등등
+        // in: 제한을 걸어주는 요소. 그 이상은 못가게 하는
+        guard let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        
+        // 생성할 디렉토리 경로(url에 경로 추가)
+        let directoryPath = url.appendingPathComponent("RestuarantImages")
+        
+        // 디렉토리 생성
+        do {
+            // at: 경로 및 폴더명, 위에서 만든 URL 사용
+            // withIntermediateDirectories: “중간 디렉토리들도 만들거니?” 라는 의미
+            // attributes: 파일 접근 권한, 그룹 등등 폴더 속성 정의
+            try fileManager.createDirectory(
+                at: directoryPath,
+                withIntermediateDirectories: false,
+                attributes: [:]
+            )
+        } catch {
+            print(error)
+        }
+        
+        print("\(url.path)")
+    }
+    
+    // MARK: - Creare: 파일 생성 && Update -> 동일 코드로 동작 시 파일 변경
+    func createFile(urlPath: String, image: UIImage) {
+        // urls 메소드 => 요청된 도메인에서 지정된 공통 디렉토리에 대한 URL배열을 리턴해주는 메소드
+        // for: 폴더를 정해주는 요소. Download 혹은 Document 등등
+        // in: 제한을 걸어주는 요소. 그 이상은 못가게 하는
+        guard let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        
+        // 이미지 처리
+        guard let imageData = image.jpegData(compressionQuality: 1) else { return } // ?? image.pngData() else { return }
+        // 생성할 디렉토리 경로(url에 경로 추가)
+        let directoryPath = url.appendingPathComponent("RestuarantImages")
+        // 이전 디렉토리 경로에 경로 추가
+        let imagePath: URL = directoryPath.appendingPathComponent("\(urlPath).jpeg")
+        
+        // 경로에 파일 만들기
+        do {
+            try imageData.write(to: imagePath)
+        } catch {
+            print(error)
+        }
+        
+    }
+    
+    // MARK: - Read: 파일 읽기
+    func readFile(urlPath: String) -> UIImage {
+        // urls 메소드 => 요청된 도메인에서 지정된 공통 디렉토리에 대한 URL배열을 리턴해주는 메소드
+        // for: 폴더를 정해주는 요소. Download 혹은 Document 등등
+        // in: 제한을 걸어주는 요소. 그 이상은 못가게 하는
+        guard let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return UIImage(systemName: "person")! }
+        
+        // 생성할 디렉토리 경로(url에 경로 추가)
+        let directoryPath = url.appendingPathComponent("RestuarantImages")
+        // 이전 디렉토리 경로에 hi.txt 경로 추가
+        let imagePath: URL = directoryPath.appendingPathComponent("\(urlPath).jpeg")
+        
+        do {
+            // URL을 불러와서 Data타입으로 초기화
+            let imageData: Data = try Data(contentsOf: imagePath)
+            // Data to UIImage
+            let image: UIImage = UIImage(data: imageData) ?? UIImage(systemName: "person")!
+            
+            return image
+        } catch {
+            print(error)
+            return UIImage(systemName: "person")!
+        }
+    }
+    
+    // MARK: - Delete: 파일 삭제
+    func deleteFile(urlPath: String) {
+        // urls 메소드 => 요청된 도메인에서 지정된 공통 디렉토리에 대한 URL배열을 리턴해주는 메소드
+        // for: 폴더를 정해주는 요소. Download 혹은 Document 등등
+        // in: 제한을 걸어주는 요소. 그 이상은 못가게 하는
+        guard let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        
+        // 생성할 디렉토리 경로(url에 경로 추가)
+        let directoryPath = url.appendingPathComponent("RestuarantImages")
+        // 이전 디렉토리 경로에 hi.txt 경로 추가
+        let imagePath: URL = directoryPath.appendingPathComponent("\(urlPath).jpeg")
+        
+        do {
+            try fileManager.removeItem(at: imagePath)
+        } catch {
+            print(error)
+        }
+    }
+```
+
 
 
 
