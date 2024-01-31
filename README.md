@@ -26,8 +26,7 @@
 <뭐 먹지? 태그로 관리하는 맛집 & 룰렛>은 아래의 그림처럼  
 맛집을 추가하기 위한 검색이 가능하고 추가할 맛집을 태그와 함께 저장/수정이 가능합니다.  
 <img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/10e99a6d-3b7b-450b-9d36-2edf5a1c57c1"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/dbd3bf09-6011-4013-9519-cad105fa9fdc"  width="300" height="650"/>
-<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/707a2205-b526-41dd-b6cc-175c8faa862a"  width="300" height="650"/>  
+<img src="https://github.com/kangsworkspace/DataStorage/assets/141600830/dbd3bf09-6011-4013-9519-cad105fa9fdc"  width="300" height="650"/>  
 <br/>
 <br/>
 <br/>
@@ -272,6 +271,119 @@
 
 
 ## 앨범의 이미지를 저장한 경우에만 경로 생성 및 데이터 저장(저장 공간 아끼기)  
+
+맛집을 저장할때마다 기기에 사진이 하나씩 이미지 파일이 저장된다면 데이터 공간을 많이 차지할 수 있기 때문에  
+앨범에서 따로 이미지를 가져온 경우에만 파일 매니저를 통해 이미지를 저장하도록 코드를 짰습니다.  
+ 
+**이미지의 경로는 맛집이 저장되면서 함께 저장되는 데이터로 무조건 존재하지만**  
+**파일의 경로는 앨범의 이미지를 저장하지 않으면 생성되지 않도록 하였습니다.**  
+![1111](https://github.com/kangsworkspace/DataStorage/assets/141600830/b92fba2e-2d9c-4629-b333-767a6db2fda9)  
+   
+파일 경로가 없는 경우 파일 매니저에서 UIImage(systemName: "person")을 리턴하도록 하였습니다.  
+그래서 리턴값을 보고 다음과 같이 파일을 읽고 쓰는 처리를 다르게 동작하도록 하였습니다.  
+
+**맛집 데이터를 저장하는 경우입니다.**   
+```swift
+ // 코어 데이터에 맛집 추가
+    func addResToCoreData(restaurantData: Document, catNameArray: [String], catTextArray: [String], resImage: UIImage) {
+        
+        // 데이터 할당
+        let address = restaurantData.address ?? ""
+        let group = restaurantData.group ?? ""
+        
+        // 번호 에러처리
+        let phone = if restaurantData.phone != "" {
+            restaurantData.phone
+        } else {
+            "번호 정보 없음"
+        }
+        
+        let placeName = restaurantData.placeName ?? ""
+        let roadAddress = restaurantData.roadAddress ?? ""
+        let placeURL = restaurantData.placeURL ?? ""
+        let date = Date()
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        let dateString: String = formatter.string(from: date)
+        
+        // 기본 이미지가 아니면 이미지 파일 생성
+        if !checkCommonImage(image: resImage) {
+            imageManager.createFile(urlPath: dateString, image: resImage)
+        }
+        
+        guard catNameArray.count == catTextArray.count else {
+            fatalError("The length of catNameArray and catTextArray must be the same.")
+        }
+        
+        coreDataManager.saveResToCoreData(address: address, group: group, phone: phone!, placeName: placeName, roadAddress: roadAddress, placeURL: placeURL, date: date, imagePath: dateString, categoryNameArray: catNameArray, categoryTextArray: catTextArray) {
+        }
+    }
+```
+ 
+!checkCommonImage(image: resImage) 함수를 통해 전달받은 이미지가 에셋에 있는 기본 이미지인지 확인합니다.  
+아래는 checkCommonImage(image: UIImage) 함수의 내용입니다.   
+
+```swift
+private func checkCommonImage(image: UIImage) -> Bool {
+        
+        //  13개
+        switch image {
+        case let image where image == RestaurantImages.korean :
+            return true
+        case let image where image == RestaurantImages.chicken :
+            return true
+        case let image where image == RestaurantImages.bakery :
+            return true
+        case let image where image == RestaurantImages.dessertCafe :
+            return true
+        default:
+            return false
+        }
+    }
+ ```
+   
+여기서 false가 리턴된다면 앨범의 이미지를 따로 저장한 것이라고 볼 수 있게 됩니다.   
+그러면 파일 매니저를 통해 이미지 파일을 저장하고 이 때 파일의 경로가 생성됩니다.  
+ 
+반대로 true가 리턴된다면 기본 이미지를 저장한 것이라고 볼 수 있게 됩니다.  
+파일의 경로가 생성되지 않습니다.   
+ 
+ 
+**맛집 데이터를 불러오는 경우**   
+1.앨범의 이미지를 저장한 경우와 2.에셋에 있는 기본 이미지로 저장한 경우로 나누었습니다.   
+   
+파일 매니저에서 데이터를 불러온 결과가 UIImage(systemName: "person") 일 때는 파일 경로가 없고   
+반대로 불러온 결과과 UIImage(systemName: "person")가 아닐 경우에는   
+파일 경로와 해당 경로에 저장한 이미지가 있다는 것이기 때문에 리턴된 이미지를 사용하도록 하였습니다.  
+```swift
+  resImageView.image = if imageManager.readFile(urlPath: imagePath) != UIImage(systemName: "person") {
+                    imageManager.readFile(urlPath: imagePath)
+                } else {
+                	// 맛집의 group에 따라 에셋 이미지 할당
+                	if let resGroup = restaurantCoreData.group {
+                        switch resGroup {
+                        case let groupString where groupString.contains("한식"):
+                            RestaurantImages.korean
+                        case let groupString where groupString.contains("치킨"):
+                            RestaurantImages.chicken
+                        case let groupString where groupString.contains("제과"):
+                            RestaurantImages.bakery
+                        default:
+                            RestaurantImages.restaurant
+                        }
+                }
+  }
+```
+
+### 아쉬운 점  
+파일 매니저에서 데이터를 불러올 때 **리턴값을 옵셔널**로 하고 **옵셔널에 대한 에러 처리**를 하는게 훨씬 깔끔한 코드가 나올 것 같습니다.  
+<br/>
+<br/>
+<br/>  
+
+
+
 ## 로직1 - 이전 태그에 해당하는 식당의 태그만 보여주기
 ## 로직2 - (+, -)버튼에 따른 테이블 뷰 처리  
 
